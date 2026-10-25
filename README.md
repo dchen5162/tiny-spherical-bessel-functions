@@ -31,3 +31,10 @@ The trade-off is precision and range. The implementation uses upward recurrence 
 - For negative arguments, `j_n(-x) = (-1)^n j_n(x)` and `y_n(-x) = (-1)^{n+1} y_n(x)` are returned directly.
 - Negative orders are not supported; `n < 0` raises `ValueError`.
 - For very large `n` at small `|x|`, `j_n` underflows to `0.0`. This is physically correct, not a bug.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
